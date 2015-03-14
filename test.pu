@@ -1,2 +1,2 @@
-run Proc.new { |env| ['200', {'Content-Type' => 'text/html'}, ['Hello World'] }
+run Proc.new { |env| ['200', {'Content-Type' => 'text/html'}, ['Hello World', "You're a pig"]] }
 

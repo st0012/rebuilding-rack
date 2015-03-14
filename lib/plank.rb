@@ -1,13 +1,25 @@
+require "lib/plank/handler.rb"
+require "lib/plank/builder.rb"
+
 module Plank
   class Server
-    def initialize
+
+    PORT = "9292"
+    HOST = "localhost"
+    ENVIRONMENT = "development"
+
+    def initialize(args)
       @options = default_options
       @options[:config] = args[0]
       @app = build_app
     end
 
     def self.start
-      new(args).start
+      new(ARGV).start
+    end
+
+    def start
+      server.run @app, @options
     end
 
     private
@@ -20,14 +32,12 @@ module Plank
       }      
     end
 
-    def build_app
-      Plank::Builder.parse_file(options[:config])
+    def server
+      @server ||= Plank::Handler.default
     end
-  end
 
-  class Builder
-    def self.parse_file
-       
+    def build_app
+      Plank::Builder.parse_file(@options[:config])
     end
   end
 end
